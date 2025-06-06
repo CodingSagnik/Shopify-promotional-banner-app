@@ -15,8 +15,15 @@ export default function handler(req, res) {
   // Parse URL
   const urlPath = new URL(url, `http://${req.headers.host}`).pathname;
 
+  // Root path - redirect to app interface  
+  if (urlPath === '/') {
+    res.writeHead(302, { Location: '/app' });
+    res.end();
+    return;
+  }
+
   // Health check endpoint
-  if (urlPath === '/' || urlPath === '/api') {
+  if (urlPath === '/api' || urlPath === '/health') {
     res.status(200).json({
       message: 'Promotional Banner App is running!',
       status: 'healthy',
