@@ -249,22 +249,3 @@ document.addEventListener('banner-dismissed', (event) => {
 ## 📜 License
 
 MIT License - feel free to use this project for your own Shopify apps!
-
-## 🤝 Contributing
-
-1. Fork the repository
-2. Create a feature branch
-3. Make your changes
-4. Test thoroughly
-5. Submit a pull request
-
-## 📞 Support
-
-For issues and questions:
-1. Check the troubleshooting section above
-2. Review Shopify's [App Development Documentation](https://shopify.dev/docs/apps)
-3. Visit [Shopify Community Forums](https://community.shopify.com/)
-
----
-
-**Happy coding! 🎉** 
