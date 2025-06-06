@@ -1,12 +1,12 @@
-import express from 'express';
-import cors from 'cors';
-import compression from 'compression';
-import { shopifyApp } from '@shopify/shopify-app-express';
-import { ApiVersion, AppDistribution } from '@shopify/shopify-api';
-import { readFileSync } from 'fs';
-import { join } from 'path';
-import { fileURLToPath } from 'url';
-import { dirname } from 'path';
+const express = require('express');
+const cors = require('cors');
+const compression = require('compression');
+const { shopifyApp } = require('@shopify/shopify-app-express');
+const { ApiVersion, AppDistribution } = require('@shopify/shopify-api');
+const { readFileSync } = require('fs');
+const { join } = require('path');
+const { fileURLToPath } = require('url');
+const { dirname } = require('path');
 
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = dirname(__filename);
@@ -70,19 +70,20 @@ app.get('/api/app', async (req, res) => {
 
 // Health check endpoint
 app.get('/', (req, res) => {
-  res.status(200).json({
+  res.json({
     message: 'Promotional Banner App is running!',
     status: 'healthy',
-    timestamp: new Date().toISOString()
+    timestamp: new Date().toISOString(),
+    url: req.headers.host
   });
 });
 
 // Banner configuration endpoint
 app.get('/api/banner/config', (req, res) => {
-  res.status(200).json({
+  res.json({
     enabled: true,
     text: '🎉 Free Shipping on All Orders! 🎉',
-    backgroundColor: '#4CAF50',
+    backgroundColor: '#667eea',
     textColor: '#FFFFFF',
     fontSize: '16px',
     position: 'top'
@@ -334,7 +335,7 @@ app.get('/app', (req, res) => {
           font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
           margin: 0;
           padding: 20px;
-          background-color: #f9f9f9;
+          background-color: #f9f9fa;
         }
         .container {
           max-width: 600px;
@@ -408,4 +409,4 @@ app.use((err, req, res, next) => {
 });
 
 // For Vercel serverless functions
-export default app; 
+module.exports = app; 
