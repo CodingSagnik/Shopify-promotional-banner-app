@@ -1,0 +1,595 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎉 Promotional Banner - Shopify App</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            color: #333;
+        }
+
+        /* Enhanced Promotional Banner */
+        .promotional-banner {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 50%, #3d8b40 100%);
+            color: white;
+            padding: 16px 24px;
+            text-align: center;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 15px;
+            position: relative;
+            box-shadow: 0 4px 20px rgba(76, 175, 80, 0.3);
+            animation: slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+            overflow: hidden;
+        }
+
+        .promotional-banner::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        .banner-content {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex: 1;
+            justify-content: center;
+            position: relative;
+            z-index: 2;
+        }
+
+        .banner-icon {
+            font-size: 24px;
+            animation: bounce 2s infinite;
+        }
+
+        .banner-text {
+            font-size: 18px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+        }
+
+        .banner-close {
+            background: rgba(255, 255, 255, 0.2);
+            border: none;
+            color: white;
+            cursor: pointer;
+            font-size: 20px;
+            width: 32px;
+            height: 32px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s ease;
+            position: relative;
+            z-index: 2;
+            backdrop-filter: blur(10px);
+        }
+
+        .banner-close:hover {
+            background: rgba(255, 255, 255, 0.3);
+            transform: scale(1.1);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+        }
+
+        .banner-close:active {
+            transform: scale(0.95);
+        }
+
+        /* Main Container */
+        .container {
+            background: white;
+            margin: 0;
+            min-height: calc(100vh - 80px);
+            position: relative;
+        }
+
+        .content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+
+        /* Hero Section */
+        .hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .hero h1 {
+            font-size: 3.5rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 20px;
+            line-height: 1.2;
+        }
+
+        .hero p {
+            font-size: 1.25rem;
+            color: #666;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            line-height: 1.6;
+        }
+
+        .status-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            background: linear-gradient(135deg, #4CAF50, #45a049);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            animation: pulse 2s infinite;
+        }
+
+        /* Control Panel */
+        .control-panel {
+            background: linear-gradient(135deg, #f8f9fa 0%, #e9ecef 100%);
+            border-radius: 20px;
+            padding: 40px;
+            margin: 40px 0;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.1);
+            border: 1px solid rgba(255,255,255,0.8);
+        }
+
+        .control-panel h3 {
+            font-size: 1.5rem;
+            margin-bottom: 25px;
+            color: #333;
+            text-align: center;
+        }
+
+        .controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 15px;
+            margin-bottom: 30px;
+        }
+
+        .btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: 12px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: 600;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 8px 25px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn:active {
+            transform: translateY(0);
+        }
+
+        .btn.danger {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a24 100%);
+            box-shadow: 0 4px 15px rgba(255, 107, 107, 0.3);
+        }
+
+        .btn.success {
+            background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+            box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+        }
+
+        .btn.warning {
+            background: linear-gradient(135deg, #ffa726 0%, #ff9800 100%);
+            box-shadow: 0 4px 15px rgba(255, 167, 38, 0.3);
+        }
+
+        /* Features Grid */
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin: 60px 0;
+        }
+
+        .feature {
+            background: white;
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.08);
+            border: 1px solid rgba(255,255,255,0.8);
+            text-align: center;
+            transition: all 0.3s ease;
+        }
+
+        .feature:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 50px rgba(0,0,0,0.12);
+        }
+
+        .feature-icon {
+            font-size: 3rem;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        .feature h4 {
+            font-size: 1.25rem;
+            margin-bottom: 15px;
+            color: #333;
+        }
+
+        .feature p {
+            color: #666;
+            line-height: 1.6;
+        }
+
+        /* Animations */
+        @keyframes slideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        @keyframes fadeOut {
+            from {
+                opacity: 1;
+                transform: translateY(0);
+            }
+            to {
+                opacity: 0;
+                transform: translateY(-100%);
+            }
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes bounce {
+            0%, 20%, 50%, 80%, 100% {
+                transform: translateY(0);
+            }
+            40% {
+                transform: translateY(-4px);
+            }
+            60% {
+                transform: translateY(-2px);
+            }
+        }
+
+        @keyframes pulse {
+            0% {
+                box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            }
+            50% {
+                box-shadow: 0 4px 25px rgba(76, 175, 80, 0.5);
+            }
+            100% {
+                box-shadow: 0 4px 15px rgba(76, 175, 80, 0.3);
+            }
+        }
+
+        .promotional-banner.hidden {
+            display: none !important;
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 2.5rem;
+            }
+            
+            .promotional-banner {
+                padding: 12px 16px;
+            }
+            
+            .banner-text {
+                font-size: 16px;
+            }
+            
+            .banner-icon {
+                font-size: 20px;
+            }
+            
+            .control-panel {
+                padding: 25px;
+            }
+            
+            .controls {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .promotional-banner {
+                flex-direction: column;
+                gap: 8px;
+                padding: 10px 15px;
+            }
+            
+            .banner-close {
+                position: absolute;
+                top: 8px;
+                right: 15px;
+            }
+            
+            .banner-content {
+                padding-right: 40px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- Enhanced Promotional Banner -->
+    <div id="promotional-banner-test" class="promotional-banner" data-banner-id="test">
+        <div class="banner-content">
+            <span class="banner-icon">🎉</span>
+            <span class="banner-text">Free Shipping on All Orders!</span>
+            <span class="banner-icon">🎉</span>
+        </div>
+        <button class="banner-close" onclick="closeBanner('test')" aria-label="Close banner">×</button>
+    </div>
+
+    <div class="container">
+        <div class="content">
+            <!-- Hero Section -->
+            <div class="hero">
+                <h1>🎉 Promotional Banner</h1>
+                <p>A beautiful, modern Shopify app that displays eye-catching promotional banners to boost your store's conversions and engage customers.</p>
+                <div class="status-badge">
+                    <span>✅</span>
+                    <span>Banner Active & Working</span>
+                </div>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="control-panel">
+                <h3>🎛️ Interactive Controls</h3>
+                <div class="controls">
+                    <button class="btn success" onclick="showBanner()">
+                        📢 Show Banner
+                    </button>
+                    <button class="btn danger" onclick="hideBanner()">
+                        ❌ Hide Banner
+                    </button>
+                    <button class="btn" onclick="resetBanner()">
+                        🔄 Reset State
+                    </button>
+                    <button class="btn warning" onclick="changeStyle()">
+                        🎨 Change Style
+                    </button>
+                </div>
+                
+                <div style="text-align: center; margin-top: 20px;">
+                    <p style="color: #666; font-size: 14px;">
+                        💡 <strong>Try this:</strong> Close the banner, refresh the page, then click "Show Banner" to see the persistence in action!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Features Grid -->
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h4>Lightning Fast</h4>
+                    <p>Optimized for performance with smooth animations and minimal load time impact on your store.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h4>Fully Responsive</h4>
+                    <p>Looks perfect on desktop, tablet, and mobile devices with adaptive design principles.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🎨</div>
+                    <h4>Customizable</h4>
+                    <p>Easy to customize colors, text, and behavior through your Shopify theme customization panel.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">♿</div>
+                    <h4>Accessible</h4>
+                    <p>Built with accessibility in mind, supporting keyboard navigation and screen readers.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">💾</div>
+                    <h4>Smart Memory</h4>
+                    <p>Remembers when customers dismiss the banner and respects their choice for 24 hours.</p>
+                </div>
+                
+                <div class="feature">
+                    <div class="feature-icon">🛒</div>
+                    <h4>Shopify Native</h4>
+                    <p>Built as a Theme App Extension for seamless integration with any Shopify theme.</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let currentStyle = 0;
+        const styles = [
+            {
+                background: 'linear-gradient(135deg, #4CAF50 0%, #45a049 50%, #3d8b40 100%)',
+                text: 'Free Shipping on All Orders!'
+            },
+            {
+                background: 'linear-gradient(135deg, #2196F3 0%, #1976D2 50%, #0D47A1 100%)',
+                text: 'Limited Time: 50% Off Everything!'
+            },
+            {
+                background: 'linear-gradient(135deg, #FF9800 0%, #F57C00 50%, #E65100 100%)',
+                text: 'Flash Sale: Buy 2 Get 1 Free!'
+            },
+            {
+                background: 'linear-gradient(135deg, #9C27B0 0%, #7B1FA2 50%, #4A148C 100%)',
+                text: 'New Collection Now Available!'
+            },
+            {
+                background: 'linear-gradient(135deg, #F44336 0%, #D32F2F 50%, #B71C1C 100%)',
+                text: 'Last Day: Free Delivery!'
+            }
+        ];
+
+        function closeBanner(bannerId) {
+            const banner = document.getElementById('promotional-banner-' + bannerId);
+            if (banner) {
+                banner.style.animation = 'fadeOut 0.4s cubic-bezier(0.4, 0, 0.2, 1) forwards';
+                setTimeout(() => {
+                    banner.classList.add('hidden');
+                    localStorage.setItem('banner-dismissed-' + bannerId, JSON.stringify({
+                        dismissed: true,
+                        timestamp: Date.now(),
+                        expiresIn: 24 * 60 * 60 * 1000
+                    }));
+                    showNotification('Banner dismissed! 👋', 'success');
+                }, 400);
+            }
+        }
+        
+        function showBanner() {
+            const banner = document.getElementById('promotional-banner-test');
+            if (banner) {
+                banner.classList.remove('hidden');
+                banner.style.display = 'flex';
+                banner.style.animation = 'slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1)';
+                showNotification('Banner is now visible! 🎉', 'success');
+            }
+        }
+        
+        function hideBanner() {
+            closeBanner('test');
+        }
+        
+        function resetBanner() {
+            localStorage.removeItem('banner-dismissed-test');
+            showBanner();
+            showNotification('Banner state reset! 🔄', 'info');
+        }
+
+        function changeStyle() {
+            const banner = document.getElementById('promotional-banner-test');
+            const textElement = banner.querySelector('.banner-text');
+            
+            if (banner && textElement) {
+                currentStyle = (currentStyle + 1) % styles.length;
+                const style = styles[currentStyle];
+                
+                banner.style.background = style.background;
+                textElement.textContent = style.text;
+                
+                // Add a subtle scale animation
+                banner.style.transform = 'scale(1.02)';
+                setTimeout(() => {
+                    banner.style.transform = 'scale(1)';
+                }, 200);
+                
+                showNotification('Style updated! ✨', 'success');
+            }
+        }
+
+        function showNotification(message, type = 'info') {
+            const notification = document.createElement('div');
+            notification.style.cssText = `
+                position: fixed;
+                top: 100px;
+                right: 20px;
+                background: ${type === 'success' ? '#4CAF50' : type === 'info' ? '#2196F3' : '#FF9800'};
+                color: white;
+                padding: 15px 25px;
+                border-radius: 12px;
+                box-shadow: 0 4px 20px rgba(0,0,0,0.2);
+                z-index: 10000;
+                font-weight: 600;
+                animation: slideIn 0.3s ease;
+                backdrop-filter: blur(10px);
+            `;
+            notification.textContent = message;
+            
+            // Add slide-in animation
+            const style = document.createElement('style');
+            style.textContent = `
+                @keyframes slideIn {
+                    from { transform: translateX(100%); opacity: 0; }
+                    to { transform: translateX(0); opacity: 1; }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            document.body.appendChild(notification);
+            
+            setTimeout(() => {
+                notification.style.animation = 'slideIn 0.3s ease reverse';
+                setTimeout(() => {
+                    notification.remove();
+                    style.remove();
+                }, 300);
+            }, 2000);
+        }
+        
+        // Check dismissal state on load
+        document.addEventListener('DOMContentLoaded', function() {
+            const dismissalData = localStorage.getItem('banner-dismissed-test');
+            
+            if (dismissalData) {
+                try {
+                    const parsed = JSON.parse(dismissalData);
+                    if (parsed.dismissed && (Date.now() - parsed.timestamp) < parsed.expiresIn) {
+                        document.getElementById('promotional-banner-test').classList.add('hidden');
+                    }
+                } catch (error) {
+                    console.warn('Could not parse banner dismissal data');
+                }
+            }
+        });
+        
+        // Add keyboard support
+        document.addEventListener('keydown', function(event) {
+            if (event.key === 'Escape') {
+                closeBanner('test');
+            }
+        });
+
+        // Add some interactive elements
+        document.addEventListener('click', function(event) {
+            if (event.target.closest('.promotional-banner') && !event.target.closest('.banner-close')) {
+                showNotification('Banner clicked! 🖱️', 'info');
+            }
+        });
+    </script>
+</body>
+</html> 

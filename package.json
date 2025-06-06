@@ -1,0 +1,30 @@
+{
+  "name": "promotional-banner-app",
+  "version": "1.0.0",
+  "description": "A Shopify app that displays a promotional banner for free shipping",
+  "main": "web/index.js",
+  "scripts": {
+    "build": "shopify app build",
+    "dev": "shopify app dev",
+    "info": "shopify app info",
+    "scaffold": "shopify app scaffold",
+    "deploy": "shopify app deploy",
+    "generate": "shopify app generate",
+    "preview": "npm run build && shopify app preview",
+    "start": "node web/index.js"
+  },
+  "author": "Your Name",
+  "license": "MIT",
+  "dependencies": {
+    "@shopify/cli": "^3.59.0",
+    "cors": "^2.8.5",
+    "express": "^5.1.0"
+  },
+  "devDependencies": {
+    "@shopify/cli": "^3.59.0"
+  },
+  "workspaces": [
+    "web",
+    "extensions/*"
+  ]
+}

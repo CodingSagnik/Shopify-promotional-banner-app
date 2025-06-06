@@ -1,0 +1,40 @@
+{
+  "version": 2,
+  "name": "promotional-banner-app",
+  "builds": [
+    {
+      "src": "web/index.js",
+      "use": "@vercel/node"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/app_proxy/(.*)",
+      "dest": "/web/index.js"
+    },
+    {
+      "src": "/api/(.*)",
+      "dest": "/web/index.js"
+    },
+    {
+      "src": "/auth/(.*)",
+      "dest": "/web/index.js"
+    },
+    {
+      "src": "/webhooks/(.*)",
+      "dest": "/web/index.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/web/index.js"
+    }
+  ],
+  "env": {
+    "NODE_ENV": "production"
+  },
+  "functions": {
+    "web/index.js": {
+      "maxDuration": 30
+    }
+  }
+} 

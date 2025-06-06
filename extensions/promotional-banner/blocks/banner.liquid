@@ -1,0 +1,294 @@
+{% if block.settings.enable_banner %}
+<div 
+  id="promotional-banner-{{ block.id }}" 
+  class="promotional-banner"
+  style="
+    background: linear-gradient(135deg, {{ block.settings.background_color }} 0%, {{ block.settings.background_color | color_darken: 10 }} 50%, {{ block.settings.background_color | color_darken: 20 }} 100%);
+    color: {{ block.settings.text_color }};
+    text-align: center;
+    padding: 16px 24px;
+    font-size: 18px;
+    font-weight: 600;
+    position: relative;
+    z-index: 1000;
+    width: 100%;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 15px;
+    animation: slideDown 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+    box-shadow: 0 4px 20px {{ block.settings.background_color | color_modify: 'alpha', 0.3 }};
+    overflow: hidden;
+    letter-spacing: 0.5px;
+    text-shadow: 0 1px 2px rgba(0,0,0,0.1);
+  "
+  data-banner-id="{{ block.id }}"
+>
+  {% comment %} Shimmer effect overlay {% endcomment %}
+  <div style="
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+    animation: shimmer 3s infinite;
+    pointer-events: none;
+  "></div>
+
+  <div class="banner-content" style="
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex: 1;
+    justify-content: center;
+    position: relative;
+    z-index: 2;
+  ">
+    <span class="banner-icon" style="
+      font-size: 24px;
+      animation: bounce 2s infinite;
+    ">🎉</span>
+    <span class="banner-text">{{ block.settings.banner_text }}</span>
+    <span class="banner-icon" style="
+      font-size: 24px;
+      animation: bounce 2s infinite;
+    ">🎉</span>
+  </div>
+
+  <button 
+    class="banner-close" 
+    onclick="closeBanner('{{ block.id }}')"
+    style="
+      background: rgba(255, 255, 255, 0.2);
+      border: none;
+      color: {{ block.settings.text_color }};
+      font-size: 20px;
+      cursor: pointer;
+      padding: 0;
+      margin: 0;
+      line-height: 1;
+      margin-left: auto;
+      width: 32px;
+      height: 32px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3s ease;
+      position: relative;
+      z-index: 2;
+      backdrop-filter: blur(10px);
+    "
+    onmouseover="this.style.background='rgba(255, 255, 255, 0.3)'; this.style.transform='scale(1.1)'; this.style.boxShadow='0 2px 8px rgba(0,0,0,0.2)'"
+    onmouseout="this.style.background='rgba(255, 255, 255, 0.2)'; this.style.transform='scale(1)'; this.style.boxShadow='none'"
+    onmousedown="this.style.transform='scale(0.95)'"
+    onmouseup="this.style.transform='scale(1.1)'"
+    aria-label="Close banner"
+  >
+    ×
+  </button>
+</div>
+
+<style>
+  @keyframes slideDown {
+    from { 
+      transform: translateY(-100%); 
+      opacity: 0;
+    }
+    to { 
+      transform: translateY(0); 
+      opacity: 1;
+    }
+  }
+  
+  @keyframes fadeOut {
+    from {
+      opacity: 1;
+      transform: translateY(0);
+    }
+    to {
+      opacity: 0;
+      transform: translateY(-100%);
+    }
+  }
+
+  @keyframes shimmer {
+    0% { left: -100%; }
+    100% { left: 100%; }
+  }
+
+  @keyframes bounce {
+    0%, 20%, 50%, 80%, 100% {
+      transform: translateY(0);
+    }
+    40% {
+      transform: translateY(-4px);
+    }
+    60% {
+      transform: translateY(-2px);
+    }
+  }
+
+  .promotional-banner {
+    font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Inter', sans-serif;
+    transition: all 0.3s ease;
+  }
+  
+  .promotional-banner:hover {
+    filter: brightness(0.95);
+    transform: translateY(-1px);
+  }
+  
+  .banner-text {
+    flex: 1;
+    text-align: center;
+    font-weight: 600;
+  }
+
+  .banner-content {
+    position: relative;
+    z-index: 2;
+  }
+
+  .banner-icon {
+    display: inline-block;
+  }
+  
+  @media (max-width: 768px) {
+    .promotional-banner {
+      padding: 12px 16px !important;
+      font-size: 16px !important;
+    }
+    
+    .banner-icon {
+      font-size: 20px !important;
+    }
+  }
+  
+  @media (max-width: 480px) {
+    .promotional-banner {
+      padding: 10px 15px !important;
+      font-size: 14px !important;
+      flex-direction: column;
+      gap: 8px;
+    }
+    
+    .banner-close {
+      position: absolute !important;
+      top: 8px !important;
+      right: 15px !important;
+      width: 28px !important;
+      height: 28px !important;
+      font-size: 16px !important;
+    }
+    
+    .banner-content {
+      padding-right: 40px;
+    }
+
+    .banner-icon {
+      font-size: 18px !important;
+    }
+  }
+
+  /* Accessibility and modern web standards */
+  @media (prefers-contrast: high) {
+    .promotional-banner {
+      border: 2px solid currentColor;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .promotional-banner *,
+    .banner-close,
+    .banner-icon {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+
+  @media (prefers-color-scheme: dark) {
+    .promotional-banner {
+      box-shadow: 0 4px 20px rgba(0, 0, 0, 0.4);
+    }
+  }
+
+  @media print {
+    .promotional-banner {
+      display: none !important;
+    }
+  }
+  
+  /* Hide banner when dismissed */
+  .promotional-banner.hidden {
+    display: none !important;
+  }
+</style>
+
+<script>
+  function closeBanner(bannerId) {
+    const banner = document.getElementById('promotional-banner-' + bannerId);
+    if (banner) {
+      banner.classList.add('hidden');
+      // Store dismissal in localStorage to remember user's choice
+      localStorage.setItem('banner-dismissed-' + bannerId, 'true');
+    }
+  }
+  
+  // Check if banner was previously dismissed
+  document.addEventListener('DOMContentLoaded', function() {
+    const bannerId = '{{ block.id }}';
+    const wasDismissed = localStorage.getItem('banner-dismissed-' + bannerId);
+    
+    if (wasDismissed === 'true') {
+      const banner = document.getElementById('promotional-banner-' + bannerId);
+      if (banner) {
+        banner.classList.add('hidden');
+      }
+    }
+  });
+</script>
+{% endif %}
+
+{% schema %}
+{
+  "name": "Promotional Banner",
+  "target": "head",
+  "javascript": "banner.js",
+  "stylesheet": "banner.css",
+  "settings": [
+    {
+      "type": "checkbox",
+      "id": "enable_banner",
+      "label": "Enable promotional banner",
+      "default": true
+    },
+    {
+      "type": "text",
+      "id": "banner_text",
+      "label": "Banner text",
+      "default": "🎉 Free Shipping on All Orders! 🎉"
+    },
+    {
+      "type": "color",
+      "id": "background_color",
+      "label": "Background color",
+      "default": "#4CAF50"
+    },
+    {
+      "type": "color",
+      "id": "text_color",
+      "label": "Text color",
+      "default": "#FFFFFF"
+    }
+  ],
+  "presets": [
+    {
+      "name": "Promotional Banner"
+    }
+  ]
+}
+{% endschema %} 
