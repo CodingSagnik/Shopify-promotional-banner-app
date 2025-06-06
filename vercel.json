@@ -1,6 +1,9 @@
 {
-  "version": 2,
-  "name": "promotional-banner-app",
+  "functions": {
+    "api/index.js": {
+      "runtime": "nodejs18.x"
+    }
+  },
   "rewrites": [
     {
       "source": "/(.*)",
