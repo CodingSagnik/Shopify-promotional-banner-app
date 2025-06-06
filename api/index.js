@@ -26,6 +26,57 @@ export default function handler(req, res) {
     return;
   }
 
+  // Auth callback endpoint for Shopify OAuth
+  if (urlPath === '/auth/callback') {
+    const urlObj = new URL(url, `http://${req.headers.host}`);
+    const code = urlObj.searchParams.get('code');
+    const shop = urlObj.searchParams.get('shop');
+    const state = urlObj.searchParams.get('state');
+
+    // Basic auth callback handling
+    if (code && shop) {
+      // Redirect to the app interface after successful auth
+      const appUrl = `/app?shop=${shop}`;
+      res.writeHead(302, { Location: appUrl });
+      res.end();
+      return;
+    } else {
+      // Handle auth error
+      res.status(400).json({ 
+        error: 'Authentication failed',
+        message: 'Missing required parameters for OAuth callback' 
+      });
+      return;
+    }
+  }
+
+  // Auth initiation endpoint
+  if (urlPath === '/auth') {
+    const urlObj = new URL(url, `http://${req.headers.host}`);
+    const shop = urlObj.searchParams.get('shop');
+    
+    if (!shop) {
+      res.status(400).json({ error: 'Shop parameter required' });
+      return;
+    }
+
+    // Basic OAuth URL generation (simplified)
+    const clientId = process.env.SHOPIFY_API_KEY || 'e6ab9a433a3b0b5e78fe6673c6d6e2eb';
+    const scopes = 'read_themes,write_themes';
+    const redirectUri = `https://${req.headers.host}/auth/callback`;
+    const state = 'nonce-' + Math.random().toString(36);
+
+    const authUrl = `https://${shop}/admin/oauth/authorize?` +
+      `client_id=${clientId}&` +
+      `scope=${encodeURIComponent(scopes)}&` +
+      `redirect_uri=${encodeURIComponent(redirectUri)}&` +
+      `state=${state}`;
+
+    res.writeHead(302, { Location: authUrl });
+    res.end();
+    return;
+  }
+
   // Banner configuration endpoint
   if (urlPath === '/api/banner/config') {
     res.status(200).json({
@@ -294,6 +345,9 @@ export default function handler(req, res) {
 
   // Embedded app interface
   if (urlPath === '/app') {
+    const urlObj = new URL(url, `http://${req.headers.host}`);
+    const shop = urlObj.searchParams.get('shop');
+    
     const appHtml = `
       <!DOCTYPE html>
       <html lang="en">
@@ -339,6 +393,14 @@ export default function handler(req, res) {
             border-radius: 4px;
             margin: 20px 0;
           }
+          .shop-info {
+            background-color: #f8f9fa;
+            border: 1px solid #dee2e6;
+            color: #495057;
+            padding: 15px;
+            border-radius: 4px;
+            margin: 20px 0;
+          }
           @keyframes shimmer {
             0% { background-position: -200% 0; }
             100% { background-position: 200% 0; }
@@ -356,6 +418,8 @@ export default function handler(req, res) {
             ✅ Your promotional banner app is active and ready!
           </div>
           
+          ${shop ? `<div class="shop-info">📱 Connected to: <strong>${shop}</strong></div>` : ''}
+          
           <div class="banner-preview">
             <span>🎉</span> Free Shipping on All Orders! <span>🎉</span>
           </div>
@@ -363,6 +427,7 @@ export default function handler(req, res) {
           <div style="text-align: center; margin-top: 30px;">
             <p><strong>The banner is now active on your store!</strong></p>
             <p>Visit your store to see the promotional banner in action.</p>
+            ${shop ? `<p><a href="https://${shop}" target="_blank" style="color: #007cba;">Visit your store →</a></p>` : ''}
           </div>
         </div>
       </body>
