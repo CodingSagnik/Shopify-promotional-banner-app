@@ -164,6 +164,19 @@ export default function handler(req, res) {
             border-radius: 4px;
             margin: 10px 0;
           }
+          .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            padding: 15px 20px;
+            border-radius: 4px;
+            color: white;
+            font-weight: bold;
+            z-index: 10000;
+            animation: slideIn 0.3s ease-out;
+            max-width: 300px;
+            word-wrap: break-word;
+          }
         </style>
       </head>
       <body>
@@ -234,25 +247,29 @@ export default function handler(req, res) {
           }
           
           function showNotification(message, type) {
+            // Remove any existing notifications
+            const existingNotifications = document.querySelectorAll('.notification');
+            existingNotifications.forEach(notification => notification.remove());
+            
             const notification = document.createElement('div');
+            notification.className = 'notification';
             notification.textContent = message;
-            notification.style.cssText = \`
-              position: fixed;
-              top: 20px;
-              right: 20px;
-              padding: 15px 20px;
-              border-radius: 4px;
-              color: white;
-              font-weight: bold;
-              z-index: 10000;
-              animation: slideIn 0.3s ease-out;
-              background: \${type === 'success' ? '#28a745' : type === 'error' ? '#dc3545' : '#007cba'};
-            \`;
+            
+            // Set background color based on type
+            const colors = {
+              success: '#28a745',
+              error: '#dc3545',
+              info: '#007cba'
+            };
+            notification.style.backgroundColor = colors[type] || colors.info;
             
             document.body.appendChild(notification);
             
+            // Auto-remove after 3 seconds
             setTimeout(() => {
-              notification.remove();
+              if (notification.parentNode) {
+                notification.remove();
+              }
             }, 3000);
           }
           
