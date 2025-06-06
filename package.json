@@ -1,30 +1,20 @@
 {
   "name": "promotional-banner-app",
   "version": "1.0.0",
-  "description": "A Shopify app that displays a promotional banner for free shipping",
-  "main": "web/index.js",
+  "description": "Shopify promotional banner app with beautiful UI and animations",
+  "main": "api/index.js",
   "scripts": {
-    "build": "shopify app build",
-    "dev": "shopify app dev",
-    "info": "shopify app info",
-    "scaffold": "shopify app scaffold",
-    "deploy": "shopify app deploy",
-    "generate": "shopify app generate",
-    "preview": "npm run build && shopify app preview",
-    "start": "node web/index.js"
+    "start": "node api/index.js",
+    "build": "echo 'No build needed - using Vercel API functions'",
+    "dev": "node api/index.js"
   },
-  "author": "Your Name",
+  "keywords": ["shopify", "promotional", "banner", "app", "ecommerce"],
+  "author": "Raysa Sagnik",
   "license": "MIT",
   "dependencies": {
-    "@shopify/cli": "^3.59.0",
-    "cors": "^2.8.5",
-    "express": "^5.1.0"
+    "express": "^4.18.2"
   },
-  "devDependencies": {
-    "@shopify/cli": "^3.59.0"
-  },
-  "workspaces": [
-    "web",
-    "extensions/*"
-  ]
+  "engines": {
+    "node": ">=14"
+  }
 }
